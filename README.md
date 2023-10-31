@@ -16,4 +16,4 @@ The bundle.py can be ran like any other python file or you can use the 'run' fun
 
 # What is example.py?
 
-Example.py contains boilerplate for building your project.
+example.py contains boilerplate for building your project.
