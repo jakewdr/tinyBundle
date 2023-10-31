@@ -7,7 +7,7 @@ def exampleBundleScript ():
     until the project is much larger.
     """
     from tinyBundle import bundle 
-    bundle("src/","main/")
+    bundle("src/","out/") # You should a / to the end of the bundle command!
 
 def exampleBundleAndRunScript():
     """
@@ -17,5 +17,5 @@ def exampleBundleAndRunScript():
     (again you can use compressed bundle)
     """
     from tinyBundle import bundle, run
-    bundle("src/", "main/")
+    bundle("src/", "out/") # You should a / to the end of the bundle command!
     run("out/bundle.py")
