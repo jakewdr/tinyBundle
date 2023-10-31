@@ -1,5 +1,7 @@
 def exampleBundleScript ():
     """
+    This bundles the files in 'src/' and outputs it in 'out/'
+    
     You can use compressedBundle to do this as well 
     although the size decrease doesn't become as apparent 
     until the project is much larger.
@@ -8,6 +10,12 @@ def exampleBundleScript ():
     bundle("src/","main/")
 
 def exampleBundleAndRunScript():
+    """
+    This bundles the files in 'src/' and outputs it in 'out/' 
+    and then runs the file with the -o2 optimization argument
+    
+    (again you can use compressed bundle)
+    """
     from tinyBundle import bundle, run
     bundle("src/", "main/")
     run("out/bundle.py")
