@@ -1,6 +1,6 @@
 # Why?
 
-Tiny bundle is a tiny bundler which compresses multiple python files into a single file!
+Tiny bundle is a bundler which compresses multiple python files into a single file!
 
 This is similar to the [pyz](https://github.com/BTOdell/pyz) but doesn't require its own file type!
 
