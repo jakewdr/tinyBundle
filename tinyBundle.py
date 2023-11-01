@@ -94,8 +94,22 @@ def specificFileBundle(pythonFiles,outputPath):
     with ZipFile(bundlePath, "w") as archive:
         for pythonFile in pythonFiles:
             archive.write(pythonFile)
-        
+            
+def fastBundle(inputPath,outputPath):
+    """ Bundles files in a certain path, this has less code safety then normal bundle but is faster
+        (it also doesn't copy other files apart from python files)
 
+    Args:
+        inputPath (str): Path of the unbundled python files
+        outputPath (str): Path to output the bundle
+    """
+    C=outputPath;from pathlib import Path;from zipfile import ZipFile;C+='bundle.py';A=D=[];F=Path(inputPath)
+    for E in F.iterdir():
+        if E.is_file():A.append(E)
+    for B in A:
+        if Path(B).suffix=='.py':D.append(B);A.remove(B)
+    with ZipFile(C,'w')as G:
+        for H in D:G.write(H)
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
