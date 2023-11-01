@@ -78,6 +78,23 @@ def compressedBundle(inputPath, outputPath, compressionLevel):
     if 1 <= len(files):
         for remainingFile in files:
             copy(remainingFile, outputPath)
+            
+def specificFileBundle(pythonFiles,outputPath):
+    """Creates bundle out of certain python files defined by user
+
+    Args:
+        pythonFiles (list): Contains the file path to all the python files.
+        outputPath (str): Path to output the bundle
+    """
+
+    from zipfile import ZipFile
+
+    bundlePath = outputPath + "bundle.py"
+    
+    with ZipFile(bundlePath, "w") as archive:
+        for pythonFile in pythonFiles:
+            archive.write(pythonFile)
+        
 
 
 def run(bundlePath):
