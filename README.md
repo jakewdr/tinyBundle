@@ -19,4 +19,5 @@ Then you can build a bundle in the format:
  - The ability to bundle other file types (like [webpack](https://webpack.js.org/) can).
  - The ability to bundle dependencies in the bundle.
  - A cli version?
+ - Automatic requriments.txt creation
 
