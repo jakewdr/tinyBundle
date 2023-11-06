@@ -6,6 +6,10 @@ def bundle(pythonFiles,outputPath, compressionLevel):
         outputPath (str): Path to output the bundle (use forward slashes)
         compressionLevel (int): The level of compression from 0 (minimum) to 9 (max)
     """
+    
+    if compressionLevel < 0 or 9 < compressionLevel:
+        raise ValueError("The value for compression level is not valid!")
+
 
     from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -16,7 +20,10 @@ def bundle(pythonFiles,outputPath, compressionLevel):
         for files in pythonFiles:
             newName = files.rsplit('/', 1)
             newName = str(newName[-1])
-            bundler.write(files,arcname=newName)
+            try:
+                bundler.write(files,arcname=newName)
+            except FileNotFoundError:
+                raise FileNotFoundError("The file " + files + " has not been found!")
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
