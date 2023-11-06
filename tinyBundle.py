@@ -10,7 +10,6 @@ def bundle(pythonFiles,outputPath, compressionLevel):
     if compressionLevel < 0 or 9 < compressionLevel:
         raise ValueError("The value for compression level is not valid!")
 
-
     from zipfile import ZipFile, ZIP_DEFLATED
 
     bundlePath = outputPath + "bundle.py"
