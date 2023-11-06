@@ -1,19 +1,22 @@
-# Why?
+# What is this?
 
-Tiny bundle is a bundler which compresses multiple python files into a single file!
+tinyBundle is a bundler which compresses multiple python files into a single file!
 
-This is similar to [pyz](https://github.com/BTOdell/pyz) and [zipfile](https://docs.python.org/3/library/zipapp.html) but doesn't require its own file type.
+This is similar to [pyz](https://github.com/BTOdell/pyz) and [zipfile](https://docs.python.org/3/library/zipapp.html) but doesn't require its own file type, hence it acts more like JavaScript's [rollup](https://rollupjs.org/).
 
-Hence it acts more like javascript's [rollup](https://rollupjs.org/)
+# How do I build a bundle?
 
-# How to use this?
+To build a bundle create a .py file and then import tinyBundle:
 
-Just git clone it and your good to go.
+    import tinyBundle
 
-Your source code should go in the SRC folder with the __main__.py being the file that is initially ran by python.
+Then you can build a bundle in the format:
 
-The bundle.py can be ran like any other python file or you can use the 'run' function in tinyBundle.py 
+    tinyBundle.bundle(listOfPythonFiles,outputPath,levelOfCompression)
 
-# What is example.py?
+# Upcoming features
 
-example.py contains boilerplate for building your project.
+ - The ability to bundle other file types (like [webpack](https://webpack.js.org/) can).
+ - The ability to bundle dependencies in the bundle.
+ - A cli version?
+
