@@ -8,7 +8,7 @@ This is similar to [pyz](https://github.com/BTOdell/pyz) and [zipfile](https://d
 
 You can either click the 'Use this template' button in Github or using git you can perform a git clone
 
-git clone https://github.com/jakewdr/tinyBundle
+    git clone https://github.com/jakewdr/tinyBundle
 
 
 # How do I build a bundle?
