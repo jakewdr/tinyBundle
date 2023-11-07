@@ -9,4 +9,4 @@ Use forward slashes for paths!
 
 files = ["src/__main__.py"] # Add other files here (like you would with a list)
 
-bundle(files,"out/") # out/ is the default output file
+bundle(files,"out/",0) # out/ is the default output location

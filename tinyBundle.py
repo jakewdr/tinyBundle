@@ -1,3 +1,5 @@
+import zipfile
+
 def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
 
@@ -10,11 +12,9 @@ def bundle(pythonFiles, outputPath, compressionLevel):
     if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
         raise ValueError("The value for compression level is not valid!")
 
-    from zipfile import ZipFile, ZIP_DEFLATED
-
     bundlePath = outputPath + "bundle.py" # Creates the path to output the bundle
     
-    with ZipFile(bundlePath, 'w',compression= ZIP_DEFLATED,
+    with zipfile.ZipFile(bundlePath, 'w',compression= zipfile.ZIP_DEFLATED,
                 compresslevel= int(compressionLevel)) as bundler:
         for files in pythonFiles: # For all the files in the user input list
             newName = files.rsplit('/', 1) # Splits the string into a list of substrings
