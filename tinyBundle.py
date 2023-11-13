@@ -13,9 +13,7 @@ def bundle(pythonFiles, outputPath, compressionLevel):
     if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
         raise ValueError("The value for compression level is not valid!")
 
-    bundlePath = outputPath + "bundle.py" # Creates the path to output the bundle
-    
-    with zipfile.ZipFile(bundlePath, 'w',compression= zipfile.ZIP_DEFLATED,
+    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
                 compresslevel= int(compressionLevel)) as bundler:
         for files in pythonFiles: # For all the files in the user input list
             newName = files.rsplit('/', 1) # Splits the string into a list of substrings
@@ -36,9 +34,7 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
         raise ValueError("The value for compression level is not valid!")
 
-    bundlePath = outputPath + "bundle.py" # Creates the path to output the bundle
-    
-    files, pythonFiles = [], []
+    files = pythonFiles = []
 
     for entry in pathlib.Path(fileDirectory).iterdir():
         if entry.is_file():
@@ -49,7 +45,7 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
             pythonFiles.append(value)
             files.remove(value)
     
-    with zipfile.ZipFile(bundlePath, 'w',compression= zipfile.ZIP_DEFLATED,
+    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
                 compresslevel= int(compressionLevel)) as bundler:
         for files in pythonFiles: # For all the files in the user input list
             newName = str(files).rsplit('/', 1) # Splits the string into a list of substrings

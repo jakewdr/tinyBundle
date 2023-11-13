@@ -12,6 +12,6 @@ tinyBundle.bundleDirectory("src/","out/",0)
 tinyBundle.run("out/bundle.py")
 """
 
-files = ["src/__main__.py"] # Add other files here (like you would with a list)
+files = ["src/__main__.py"] # Add other files here
 
-tinyBundle.bundle(files,"out/",0) # out/ is the default output location
+tinyBundle.bundle(files,"out/",0) # out/ is the default output location and 0 is the default compression level
