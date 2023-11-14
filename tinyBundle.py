@@ -1,17 +1,4 @@
 import zipfile, pathlib, os
-
-def compressionCheck(compressionLevel):
-    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
-        raise ValueError("The value for compression level is not valid!")
-
-def bundling(pythonFiles, outputPath, compressionLevel):
-    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
-            compresslevel= int(compressionLevel)) as bundler:
-        for files in pythonFiles: # For all the files in the user input list
-            try:
-                bundler.write(files,arcname=str(str(files).rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
-            except FileNotFoundError:
-                raise FileNotFoundError("The file " + files + " has not been found!")
             
 def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
@@ -44,6 +31,18 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     
     bundling(pythonFiles,outputPath,compressionLevel)
     
+def compressionCheck(compressionLevel):
+    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
+        raise ValueError("The value for compression level is not valid!")
+
+def bundling(pythonFiles, outputPath, compressionLevel):
+    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
+            compresslevel= int(compressionLevel)) as bundler:
+        for files in pythonFiles: # For all the files in the user input list
+            try:
+                bundler.write(files,arcname=str(str(files).rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
+            except FileNotFoundError:
+                raise FileNotFoundError("The file " + files + " has not been found!")
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
