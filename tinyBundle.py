@@ -1,5 +1,6 @@
 import zipfile
 import pathlib
+import os
 
 def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
@@ -60,6 +61,4 @@ def run(bundlePath):
     Args:
         bundlePath (str): Path to the bundle
     """
-    from os import system as cmd
-
-    cmd("python " + bundlePath + " -o2") # o2 argument added for extra optimization
+    os.system("python " + bundlePath + " -o2") # o2 argument added for extra optimization
