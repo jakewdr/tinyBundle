@@ -17,9 +17,8 @@ def bundle(pythonFiles, outputPath, compressionLevel):
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
                 compresslevel= int(compressionLevel)) as bundler:
         for files in pythonFiles: # For all the files in the user input list
-            newName = files.rsplit('/', 1) # Splits the string into a list of substrings
-            try: 
-                bundler.write(files,arcname=str(newName[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
+            try:
+                bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
             except FileNotFoundError:
                 raise FileNotFoundError("The file " + files + " has not been found!")
             
@@ -49,9 +48,8 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
                 compresslevel= int(compressionLevel)) as bundler:
         for files in pythonFiles: # For all the files in the user input list
-            newName = str(files).rsplit('/', 1) # Splits the string into a list of substrings
             try: 
-                bundler.write(files,arcname=str(newName[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
+                bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
             except FileNotFoundError:
                 raise FileNotFoundError("The file " + files + " has not been found!")
 
@@ -61,4 +59,4 @@ def run(bundlePath):
     Args:
         bundlePath (str): Path to the bundle
     """
-    os.system("python " + bundlePath + " -o2") # o2 argument added for extra optimization
+    os.system("python " + bundlePath + " -o2") # o2 argument added for extra optimization (or something)
