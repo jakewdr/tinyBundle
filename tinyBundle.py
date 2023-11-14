@@ -1,6 +1,4 @@
-import zipfile
-import pathlib
-import os
+import zipfile, pathlib, os
 
 def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
