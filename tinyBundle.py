@@ -1,5 +1,18 @@
 import zipfile, pathlib, os
 
+def compressionCheck(compressionLevel):
+    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
+        raise ValueError("The value for compression level is not valid!")
+
+def bundling(pythonFiles, outputPath, compressionLevel):
+    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
+            compresslevel= int(compressionLevel)) as bundler:
+        for files in pythonFiles: # For all the files in the user input list
+            try:
+                bundler.write(files,arcname=str(str(files).rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
+            except FileNotFoundError:
+                raise FileNotFoundError("The file " + files + " has not been found!")
+            
 def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
 
@@ -9,16 +22,8 @@ def bundle(pythonFiles, outputPath, compressionLevel):
         compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
     """
     
-    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
-        raise ValueError("The value for compression level is not valid!")
-
-    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
-                compresslevel= int(compressionLevel)) as bundler:
-        for files in pythonFiles: # For all the files in the user input list
-            try:
-                bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
-            except FileNotFoundError:
-                raise FileNotFoundError("The file " + files + " has not been found!")
+    compressionCheck(compressionLevel)
+    bundling(pythonFiles,outputPath,compressionLevel)
             
 def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     """Creates a bundle from all python files in a directory.
@@ -29,27 +34,16 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
         compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
     """
     
-    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
-        raise ValueError("The value for compression level is not valid!")
+    compressionCheck(compressionLevel)
 
-    files = pythonFiles = []
+    pythonFiles = []
 
     for entry in pathlib.Path(fileDirectory).iterdir():
-        if entry.is_file():
-            files.append(entry)
-
-    for value in files:
-        if pathlib.Path(value).suffix == ".py":
-            pythonFiles.append(value)
-            files.remove(value)
+        if entry.is_file() and pathlib.Path(entry).suffix == ".py":
+                pythonFiles.append(entry)
     
-    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
-                compresslevel= int(compressionLevel)) as bundler:
-        for files in pythonFiles: # For all the files in the user input list
-            try: 
-                bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) # Makes the new file name the final part of the string (removing the previous forward slashes)
-            except FileNotFoundError:
-                raise FileNotFoundError("The file " + files + " has not been found!")
+    bundling(pythonFiles,outputPath,compressionLevel)
+    
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
