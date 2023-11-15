@@ -4,7 +4,7 @@ def bundle(pythonFiles, outputPath, compressionLevel):
     """Creates bundle out of certain python files defined by user
 
     Args:
-        pythonFiles (list): List of paths to the specific python files (use forward slashes)
+        pythonFiles (tuple): Tuple of paths to the specific python files (use forward slashes for paths)
         outputPath (str): Path to output the bundle (use forward slashes)
         compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
     """
@@ -28,6 +28,7 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     for entry in pathlib.Path(fileDirectory).iterdir():
         if entry.is_file() and pathlib.Path(entry).suffix == ".py":
                 pythonFiles.append(str(entry))
+    pythonFiles = tuple(pythonFiles)
     
     bundling(pythonFiles,outputPath,compressionLevel)
     
@@ -38,7 +39,7 @@ def compressionCheck(compressionLevel):
 def bundling(pythonFiles, outputPath, compressionLevel):
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
             compresslevel= int(compressionLevel)) as bundler:
-        bundling = [bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) for files in pythonFiles] # List comprehension for faster bundling, messiest solution but the fastest
+        bundling = [bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) for files in pythonFiles] # List comprehension for faster bundling, messiest solution but the fastest, also converts list to tuple because who doesn't want more speed?
     
 def run(bundlePath):
     """Runs the bundle with the o2 arg
