@@ -2,8 +2,9 @@
 
 .vscode/
 
-# test files
+# testing files
 
+testing.py
 test.py
 
 # Byte-compiled / optimized / DLL files
