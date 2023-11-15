@@ -28,7 +28,7 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     for entry in pathlib.Path(fileDirectory).iterdir():
         if entry.is_file() and pathlib.Path(entry).suffix == ".py":
                 pythonFiles.append(str(entry))
-    pythonFiles = tuple(pythonFiles)
+    pythonFiles = tuple(pythonFiles) # Converts pythonFiles list to a tuple, this can be commented out
     
     bundling(pythonFiles,outputPath,compressionLevel)
     
