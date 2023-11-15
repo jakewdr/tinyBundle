@@ -38,7 +38,7 @@ def compressionCheck(compressionLevel):
 def bundling(pythonFiles, outputPath, compressionLevel):
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
             compresslevel= int(compressionLevel)) as bundler:
-        bundling = [bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) for files in pythonFiles] # List comprehension for faster bundling
+        bundling = [bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) for files in pythonFiles] # List comprehension for faster bundling, messiest solution but the fastest
     
 def run(bundlePath):
     """Runs the bundle with the o2 arg
