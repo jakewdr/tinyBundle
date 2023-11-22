@@ -51,7 +51,7 @@ def compressionCheck(compressionLevel: int):
 def bundling(pythonFiles: list, outputPath: str, compressionLevel: int): # This code is hellish but optimal
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
             compresslevel= int(compressionLevel)) as bundler:
-        [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles]
+        [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles] # List comprehension
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
@@ -59,4 +59,4 @@ def run(bundlePath):
     Args:
         bundlePath (str): Path to the bundle
     """
-    os.system("python " + bundlePath + " -o2") # o2 argument added for extra optimization (or something)
+    os.system("python " + " -O " + bundlePath) # o2 argument added for extra optimization (or something)
