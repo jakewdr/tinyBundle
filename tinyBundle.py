@@ -1,6 +1,9 @@
-import zipfile, pathlib, os
+import zipfile
+import pathlib
+import os
+import ntpath
             
-def bundle(pythonFiles, outputPath, compressionLevel):
+def bundle(pythonFiles: list, outputPath: str, compressionLevel: int):
     """Creates bundle out of certain python files defined by user
 
     Args:
@@ -10,9 +13,10 @@ def bundle(pythonFiles, outputPath, compressionLevel):
     """
     
     compressionCheck(compressionLevel)
-    bundling(pythonFiles,outputPath,compressionLevel)
+    
+    bundling(list(pythonFiles),str(outputPath),int(compressionLevel))
             
-def bundleDirectory(fileDirectory, outputPath, compressionLevel):
+def bundleDirectory(fileDirectory: str, outputPath: str, compressionLevel: int):
     """Creates a bundle from all python files in a directory.
 
     Args:
@@ -28,24 +32,27 @@ def bundleDirectory(fileDirectory, outputPath, compressionLevel):
     for entry in pathlib.Path(fileDirectory).iterdir():
         if entry.is_file() and pathlib.Path(entry).suffix == ".py":
                 pythonFiles.append(str(entry))
-    pythonFiles = tuple(pythonFiles) # Converts pythonFiles list to a tuple, this can be commented out
     
-    bundling(pythonFiles,outputPath,compressionLevel)
+    bundling(list(pythonFiles),str(outputPath),int(compressionLevel))
     
     """
     Below functions don't need Doc-strings as they are only interacted with when imported 
     by other more functions, the code for them is pretty self explanatory too!
     """
+
+def path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
     
-def compressionCheck(compressionLevel):
+def compressionCheck(compressionLevel: int):
     if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
         raise ValueError("The value for compression level is not valid!")
 
-def bundling(pythonFiles, outputPath, compressionLevel): # This code is hellish but optimal
+def bundling(pythonFiles: list, outputPath: str, compressionLevel: int): # This code is hellish but optimal
     with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
             compresslevel= int(compressionLevel)) as bundler:
-        bundling = [bundler.write(files,arcname=str(files.rsplit('/', 1)[-1])) for files in pythonFiles] # List comprehension for faster bundling, messiest solution but the fastest, also converts list to tuple because who doesn't want more speed?
-    
+        [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles]
+
 def run(bundlePath):
     """Runs the bundle with the o2 arg
 
