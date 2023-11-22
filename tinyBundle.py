@@ -1,8 +1,8 @@
 import zipfile
 import pathlib
-import os
 import ntpath
-            
+import os
+
 def bundle(pythonFiles: list, outputPath: str, compressionLevel: int):
     """Creates bundle out of certain python files defined by user
 
