@@ -18,4 +18,4 @@ files = ["src/__main__.py"] # Add other files here (can also be a list but a tup
 start = timer()
 tinyBundle.bundle(files,"out/",0) # out/ is the default output location and 0 is the default compression level
 end = timer()
-print("Bundle time = " + str(end - start) + " seconds") # time in seconds
+print("Bundled files in " + str(end - start) + " seconds") # time in seconds
