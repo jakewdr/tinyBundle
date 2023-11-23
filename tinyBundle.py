@@ -36,10 +36,10 @@ def bundleDirectory(fileDirectory: str, outputPath: str, compressionLevel: int, 
     
     bundling(list(pythonFiles),str(outputPath),int(compressionLevel), bool(createRequirements))
     
-    """
-    Below functions don't need Doc-strings as they are only interacted with when imported 
-    by other more functions, the code for them is pretty self explanatory too!
-    """
+"""
+Below functions don't need Doc-strings as they are only interacted with when imported 
+by other more functions, the code for them is pretty self explanatory too!
+"""
     
 def createRequirements():
     os.system("pipreqs src/ --force")
