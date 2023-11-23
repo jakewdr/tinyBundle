@@ -1,7 +1,6 @@
 import zipfile
 import pathlib
 import shutil
-import ntpath
 import os
 
 def bundle(pythonFiles: list, outputPath: str, compressionLevel: int, createRequirements: bool):
@@ -42,6 +41,7 @@ by other more functions, the code for them is pretty self explanatory too!
 """
     
 def path_leaf(path):
+    import ntpath
     head, tail = ntpath.split(path)
     return tail or ntpath.basename(head)
     
