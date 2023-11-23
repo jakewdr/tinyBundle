@@ -13,7 +13,7 @@ def bundle(pythonFiles: list, outputPath: str, compressionLevel: int, createRequ
         compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
     """
     
-    compressionCheck(compressionLevel)
+    compressionCheck(int(compressionLevel))
     
     bundling(list(pythonFiles),str(outputPath),int(compressionLevel), bool(createRequirements))
             
@@ -26,7 +26,7 @@ def bundleDirectory(fileDirectory: str, outputPath: str, compressionLevel: int, 
         compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
     """
     
-    compressionCheck(compressionLevel)
+    compressionCheck(int(compressionLevel))
 
     pythonFiles = []
 
@@ -41,10 +41,6 @@ Below functions don't need Doc-strings as they are only interacted with when imp
 by other more functions, the code for them is pretty self explanatory too!
 """
     
-def createRequirements():
-    os.system("pipreqs src/ --force")
-    shutil.copyfile("src/requirements.txt", "out/")
-
 def path_leaf(path):
     head, tail = ntpath.split(path)
     return tail or ntpath.basename(head)
@@ -68,4 +64,4 @@ def run(bundlePath):
     Args:
         bundlePath (str): Path to the bundle
     """
-    os.system("python " + " -O " + bundlePath) # o2 argument added for extra optimization (or something)
+    os.system("python " + " -O " + bundlePath) # optimization argument added for extra optimization (or something)
