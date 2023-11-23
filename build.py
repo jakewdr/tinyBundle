@@ -11,6 +11,11 @@ Alternative options:
 
 tinyBundle.bundleDirectory("src/","out/",0)
 tinyBundle.run("out/bundle.py")
+
+Performance info:
+
+Generating a requirements.txt file and compressing the files more uses more resources so if your
+requirements haven't changed then its recommended that you just generate requirements when needed.
 """
 
 files = ["src/__main__.py"] # Add other files here (can also be a list but a tuple if preferred)
