@@ -59,7 +59,8 @@ def bundling(pythonFiles: list, outputPath: str, compressionLevel: int, createRe
         [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles] # List comprehension
     if createRequirements == True:
         os.system("pipreqs src/ --force")
-        shutil.copy2("src/requirements.txt", "out/")
+        shutil.copy2("src/requirements.txt", outputPath)
+        os.remove("src/requirements.txt")
 
 def run(bundlePath):
     """Runs the bundle with the o2 arg
