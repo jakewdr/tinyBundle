@@ -1,6 +1,4 @@
 import zipfile
-import pathlib
-import shutil
 import os
 
 def bundle(pythonFiles: list, outputPath: str, compressionLevel: int, createRequirements: bool):
@@ -26,7 +24,7 @@ def bundleDirectory(fileDirectory: str, outputPath: str, compressionLevel: int, 
     """
     
     compressionCheck(int(compressionLevel))
-
+    import pathlib
     pythonFiles = []
 
     for entry in pathlib.Path(fileDirectory).iterdir():
@@ -54,6 +52,7 @@ def bundling(pythonFiles: list, outputPath: str, compressionLevel: int, createRe
             compresslevel= int(compressionLevel)) as bundler:
         [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles] # List comprehension
     if createRequirements == True:
+        import shutil
         os.system("pipreqs src/ --force")
         shutil.copy2("src/requirements.txt", outputPath)
         os.remove("src/requirements.txt")
