@@ -24,9 +24,14 @@ Then you can build a bundle in the format:
 
 I've made a simple project which checks a image's file size here to give an example of what tinyBundle can do, you can find that [here](https://github.com/jakewdr/imageFileSizeChecker).
 
+# Performance tips
+
+- Try segmenting code as much as possible as so python has to load as few files as possible.
+- Where possible only generate requirements once for maximum build speed.
+
 # Upcoming features
 
  - The ability to bundle other file types (like [webpack](https://webpack.js.org/) can).
- - The ability to bundle dependencies in the bundle.
+ - The ability to bundle dependencies.
  - A cli version?
  - Automatic requirements.txt creation
