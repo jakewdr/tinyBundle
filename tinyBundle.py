@@ -58,7 +58,7 @@ def bundling(pythonFiles: list, outputPath: str, compressionLevel: int, createRe
         os.remove("src/requirements.txt")
 
 def run(bundlePath):
-    """Runs the bundle with the o2 arg
+    """Runs the bundle with the optimization arg
 
     Args:
         bundlePath (str): Path to the bundle
