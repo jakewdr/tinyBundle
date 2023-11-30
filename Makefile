@@ -1,5 +1,6 @@
 run:
-	python out/bundle.py
+	make build
+	python out/bundle.py -O
 
 build:
 	python build.py
