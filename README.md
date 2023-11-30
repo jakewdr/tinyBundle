@@ -19,6 +19,9 @@ To build a bundle create a .py file and then import tinyBundle:
 Then you can build a bundle in the format:
 
     tinyBundle.bundle(listOfPythonFiles,outputPath,levelOfCompression)
+    
+After creating your build.py script you can build using
+    `make build`
 
 # Example project
 
