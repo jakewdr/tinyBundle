@@ -28,4 +28,4 @@ To build and run a bundle enter:
 
 # Example project
 
-I've made a simple project which checks a image's file size here to give an example of what tinyBundle can do, you can find that [here](https://github.com/jakewdr/imageFileSizeChecker).
+~~I've made a simple project which checks a image's file size here to give an example of what tinyBundle can do, you can find that [here](https://github.com/jakewdr/imageFileSizeChecker).~~
