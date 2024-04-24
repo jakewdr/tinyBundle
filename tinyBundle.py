@@ -6,7 +6,6 @@ import py_compile
 import python_minifier
 from time import perf_counter
 
-
 compiledFiles = []
 
 def pathLeaf(path) -> str:
