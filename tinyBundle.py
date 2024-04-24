@@ -6,8 +6,6 @@ import py_compile
 import python_minifier
 from time import perf_counter
 
-compiledFiles = []
-
 def pathLeaf(path) -> str:
     return str(os.path.split(path)[1])
 
@@ -23,6 +21,7 @@ def bundle(srcDirectory: str, outputDirectory: str, compressionLevel: int) -> No
     
     shutil.rmtree(outputDirectory) # Deletes current contents of output directory
     shutil.copytree(srcDirectory, outputDirectory) # Copies source to output directory
+    compiledFiles = []
     
     start = perf_counter()
     
