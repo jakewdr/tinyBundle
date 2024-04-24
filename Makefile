@@ -1,9 +1,9 @@
 run:
 	make build
-	python out/bundle.py -O
+	python out/bundle.py -OO
 
 build:
-	python build.py
+	python tinyBundle.py -OO
 
 setup: requirements.txt
 	pip install -r requirements.txt

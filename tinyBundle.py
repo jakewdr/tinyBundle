@@ -1,66 +1,61 @@
-import zipfile
 import os
+import shutil
+import pathlib
+import zipfile
+import py_compile
+import python_minifier
+from time import perf_counter
 
-def bundle(pythonFiles: list, outputPath: str, compressionLevel: int, createRequirements: bool):
-    """Creates bundle out of certain python files defined by user
+
+compiledFiles = []
+
+def pathLeaf(path) -> str:
+    return str(os.path.split(path)[1])
+
+def bundle(srcDirectory: str, outputDirectory: str, compressionLevel: int) -> None:
+    """Creates a bundle from all python files in a directory
 
     Args:
-        pythonFiles (tuple): Tuple of paths to the specific python files (use forward slashes for paths)
-        outputPath (str): Path to output the bundle (use forward slashes)
-        compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
+        srcDirectory (str): The original python file directory
+        outputDirectory (str): The output directory for the bundle
+        compressionLevel (int): The level of compression from 0 to 9
     """
     
-    compressionCheck(int(compressionLevel))
     
-    bundling(list(pythonFiles),str(outputPath),int(compressionLevel), bool(createRequirements))
+    shutil.rmtree(outputDirectory) # Deletes current contents of output directory
+    shutil.copytree(srcDirectory, outputDirectory) # Copies source to output directory
+    
+    start = perf_counter()
+    
+    pythonFiles = [str(entry).replace(os.sep, '/') # Appends a string of the file path with forward slashes
+    for entry in pathlib.Path(outputDirectory).iterdir() # For all the file entries in the directory
+    if ".py" in str(pathlib.Path(entry))] # If it is a verified file and is a python file
+    # Below is where the compiling and optimizations happen
+    for file in pythonFiles:
+        with open(file, "r+") as fileRW:
+            minifiedCode = python_minifier.minify(fileRW.read(), rename_locals=False, rename_globals=False) # I don't rename vars as that could cause problems when importing between files 
+            fileRW.seek(0)
+            fileRW.writelines(minifiedCode)
+            fileRW.truncate() # This line and the seek one somehow fix some corruption issues
             
-def bundleDirectory(fileDirectory: str, outputPath: str, compressionLevel: int, createRequirements: bool):
-    """Creates a bundle from all python files in a directory.
-
-    Args:
-        fileDirectory (str): Path to the directory in which the python files are located (use forward slashes)
-        outputPath (str): Path to output the bundle (use forward slashes)
-        compressionLevel (int): The level of compression from 0 (minimum compression) to 9 (max compression)
-    """
+        if "__main__" not in file: # If the __main__.py file is found in the list ignore compilation
+            compiledFile = f"{outputDirectory}{pathLeaf(file)}c"
+            py_compile.compile(file, cfile=compiledFile, optimize=2)
+            os.remove(file)
+            compiledFiles.append(compiledFile) # Outputs compiled python file
+        else:
+            compiledFiles.append(file) # This is only for the __main__.py file
+    with zipfile.ZipFile(f"{outputDirectory}bundle.py", 'w',compression=zipfile.ZIP_DEFLATED,
+            compresslevel=compressionLevel) as bundler:
+        for file in compiledFiles:
+            bundler.write(file, arcname=pathLeaf(file)) # pathleaf is needed to not maintain folder structure
+            os.remove(file) # Clean up
     
-    compressionCheck(int(compressionLevel))
-    import pathlib
-    pythonFiles = []
+    end = perf_counter()
+    print(f"Bundled in {end - start} seconds")
 
-    for entry in pathlib.Path(fileDirectory).iterdir():
-        if entry.is_file() and pathlib.Path(entry).suffix == ".py":
-                pythonFiles.append(str(entry))
-    
-    bundling(list(pythonFiles),str(outputPath),int(compressionLevel), bool(createRequirements))
-    
-"""
-Below functions don't need Doc-strings as they are only interacted with when imported 
-by other more functions, the code for them is pretty self explanatory too!
-"""
-    
-def path_leaf(path):
-    import ntpath
-    head, tail = ntpath.split(path)
-    return tail or ntpath.basename(head)
-    
-def compressionCheck(compressionLevel: int):
-    if compressionLevel < 0 or 9 < compressionLevel: # Prevents invalid compression levels
-        raise ValueError("The value for compression level is not valid!")
-
-def bundling(pythonFiles: list, outputPath: str, compressionLevel: int, createRequirements: bool): # This code is hellish but optimal
-    with zipfile.ZipFile(str(outputPath + "bundle.py"), 'w',compression= zipfile.ZIP_DEFLATED,
-            compresslevel= int(compressionLevel)) as bundler:
-        [bundler.write(file, arcname=str(path_leaf(file))) for file in pythonFiles] # List comprehension
-    if createRequirements == True:
-        import shutil
-        os.system("pipreqs src/ --force")
-        shutil.copy2("src/requirements.txt", outputPath)
-        os.remove("src/requirements.txt")
-
-def run(bundlePath):
-    """Runs the bundle with the optimization arg
-
-    Args:
-        bundlePath (str): Path to the bundle
-    """
-    os.system("python " + " -O " + bundlePath) # optimization argument added for extra optimization (or something)
+if "__main__" in __name__:
+    start = perf_counter()
+    bundle("src/", "out/", 9)
+    end = perf_counter()
+    print(f"Process completed in {end - start} seconds")
