@@ -10,31 +10,22 @@ You can either click the 'Use this template' button in Github or using git you c
 
     git clone https://github.com/jakewdr/tinyBundle
 
+Then you need to install [make](https://www.gnu.org/software/make/#download) on the relevant platform
+
+Finally to install dependencies run:
+
+    make setup
+
 # How do I build a bundle?
 
-To build a bundle create a .py file and then import tinyBundle:
+To build a bundle just run:
 
-    import tinyBundle
+    make build
 
-Then you can build a bundle in the format:
+To build and run a bundle enter:
 
-    tinyBundle.bundle(listOfPythonFiles,outputPath,levelOfCompression,generateRequirements)
-    
-After creating your build.py script you can build using
-    `make build`
+    make run
 
 # Example project
 
 I've made a simple project which checks a image's file size here to give an example of what tinyBundle can do, you can find that [here](https://github.com/jakewdr/imageFileSizeChecker).
-
-# Performance tips
-
-- Try segmenting code as much as possible as so python has to load as few files as possible.
-- Where possible only generate requirements once for maximum build speed.
-
-# Upcoming features
-
- - The ability to bundle other file types (like [webpack](https://webpack.js.org/) can).
- - The ability to bundle dependencies.
- - A cli version?
- - Automatic requirements.txt creation
