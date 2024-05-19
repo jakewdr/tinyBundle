@@ -2,7 +2,7 @@
 
 tinyBundle is a bundler which compresses multiple python files into a single file!
 
-This is similar to [pyz](https://github.com/BTOdell/pyz) and [zipfile](https://docs.python.org/3/library/zipapp.html) but doesn't require its own file type, hence it acts more like JavaScript's [rollup](https://rollupjs.org/).
+This is similar to [pyz](https://github.com/BTOdell/pyz) and [zipapp](https://docs.python.org/3/library/zipapp.html) but doesn't require its own file type, hence it acts more like JavaScript's [rollup](https://rollupjs.org/).
 
 # How do I install the project?
 
