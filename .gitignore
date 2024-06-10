@@ -2,6 +2,10 @@
 
 .vscode/
 
+# bundled file
+
+out/bundle.py
+
 # testing files
 
 testing.py
