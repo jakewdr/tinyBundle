@@ -74,8 +74,14 @@ def compileAndMinify(file: str, outputDirectory: str):
         compiledFiles.append(file)  # This is only for the __main__.py file
 
 if "__main__" in __name__:
+    SOURCEDIRECTORY = "src/"
+    OUTPUTDIRECTORY = "out/"
+    COMPRESSIONLEVEL = 9
+    
     start = perf_counter()
-    bundle("src/", "out/", 9)
+    if not os.path.exists(OUTPUTDIRECTORY):
+        os.makedirs(OUTPUTDIRECTORY)
+        bundle(SOURCEDIRECTORY, OUTPUTDIRECTORY, COMPRESSIONLEVEL)
     end = perf_counter()
     print(f"Process completed in {end - start} seconds")
 
