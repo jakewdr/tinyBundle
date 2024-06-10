@@ -4,6 +4,7 @@
 
 # bundled file
 
+out/**
 out/bundle.py
 
 # testing files
